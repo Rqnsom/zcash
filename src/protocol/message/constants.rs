@@ -18,7 +18,7 @@ pub const MAGIC_TESTNET: [u8; MAGIC_LEN] = [0xfa, 0x1a, 0xf9, 0xbf];
 pub const MAGIC_MAINNET: [u8; MAGIC_LEN] = [0x24, 0xe9, 0x27, 0x64];
 
 #[cfg(test)]
-pub const MAGIC: [u8; MAGIC_LEN] = MAGIC_TESTNET;
+pub const MAGIC: [u8; MAGIC_LEN] = MAGIC_MAINNET;
 #[cfg(all(not(test), not(feature = "crawler")))]
 pub const MAGIC: [u8; MAGIC_LEN] = MAGIC_MAINNET;
 #[cfg(feature = "crawler")]
@@ -29,6 +29,7 @@ pub const COMMAND_LEN: usize = 12;
 // Message command bytes.
 pub const VERSION_COMMAND: [u8; COMMAND_LEN] = *b"version\0\0\0\0\0";
 pub const VERACK_COMMAND: [u8; COMMAND_LEN] = *b"verack\0\0\0\0\0\0";
+pub const ALERT_COMMAND: [u8; COMMAND_LEN] = *b"alert\0\0\0\0\0\0\0";
 pub const PING_COMMAND: [u8; COMMAND_LEN] = *b"ping\0\0\0\0\0\0\0\0";
 pub const PONG_COMMAND: [u8; COMMAND_LEN] = *b"pong\0\0\0\0\0\0\0\0";
 pub const GETADDR_COMMAND: [u8; COMMAND_LEN] = *b"getaddr\0\0\0\0\0";

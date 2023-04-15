@@ -51,7 +51,7 @@ impl Version {
                 addr: addr_from,
             },
             nonce: Nonce::default(),
-            user_agent: VarStr(String::from("")),
+            user_agent: VarStr(String::from("MagicBean:5.4.2")),
             start_height: 0,
             relay: false,
         }
