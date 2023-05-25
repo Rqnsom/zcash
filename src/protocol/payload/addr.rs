@@ -63,7 +63,7 @@ impl NetworkAddr {
     pub fn new(addr: SocketAddr) -> Self {
         Self {
             last_seen: Some(OffsetDateTime::now_utc()),
-            services: 1,
+            services: 5,
             addr,
         }
     }

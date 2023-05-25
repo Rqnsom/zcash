@@ -46,12 +46,12 @@ impl Version {
             timestamp: OffsetDateTime::now_utc(),
             addr_recv: NetworkAddr {
                 last_seen: None,
-                services: 1,
+                services: 5,
                 addr: addr_recv,
             },
             addr_from: NetworkAddr {
                 last_seen: None,
-                services: 1,
+                services: 5,
                 addr: addr_from,
             },
             nonce: Nonce::default(),

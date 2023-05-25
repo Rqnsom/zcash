@@ -1,6 +1,7 @@
 //! A lightweight node implementation to be used as peers in tests.
 
 use std::{
+    collections::HashMap,
     io::{self, Error, ErrorKind},
     net::{IpAddr, Ipv4Addr, SocketAddr},
     time::Duration,
@@ -11,7 +12,7 @@ use bytes::{BufMut, BytesMut};
 use futures_util::{sink::SinkExt, TryStreamExt};
 use pea2pea::{
     protocols::{Handshake, Reading, Writing},
-    Config as NodeConfig, Connection, ConnectionSide, Node, Pea2Pea,
+    Config as NodeConfig, Connection, ConnectionInfo, ConnectionSide, Node, Pea2Pea,
 };
 use tokio::{
     sync::mpsc::{self, Receiver, Sender},
@@ -146,7 +147,8 @@ impl Default for SyntheticNodeBuilder {
         Self {
             network_config: NodeConfig {
                 // Set localhost as the default IP.
-                listener_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+                listener_ip: Some(IpAddr::V4(Ipv4Addr::UNSPECIFIED)),
+                desired_listening_port: Some(8233),
                 ..Default::default()
             },
             handshake: None,
@@ -260,9 +262,14 @@ impl SyntheticNode {
         self.inner_node.node().num_connected()
     }
 
-    /// Returns the list of active connections for this node. Should be preferred over [`known_peers`] when querying active connections.
+    /// Returns the list of active connections for this node.
     pub fn connected_peers(&self) -> Vec<SocketAddr> {
         self.inner_node.node().connected_addrs()
+    }
+
+    /// Returns the infos for active connections for this node.
+    pub fn connected_peer_infos(&self) -> HashMap<SocketAddr, ConnectionInfo> {
+        self.inner_node.node().connection_infos()
     }
 
     /// Waits until the node has at least one connection, and returns its SocketAddr.
